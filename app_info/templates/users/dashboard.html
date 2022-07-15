@@ -1,8 +1,7 @@
 {% extends "layouts/base.html"%}
 <!--title-->
 {% block title %}
- 
-User|Dashboard
+    This is extended 
 
 {% endblock %}
 
@@ -10,7 +9,7 @@ User|Dashboard
 {% block custom_css %}
 <style>
     body{
-        background-color: black;
+        background-color: black ;
     }
 </style>
 {% endblock%}
@@ -18,7 +17,8 @@ User|Dashboard
 <!-- body content-->
 {% block body_content %}
 <div class=" container-lg" >
-    <h1> Welcome to Information Tracker</h1>
+    <h1> {{welcom_msg}}  </h1>
+    
 </div>
 {% endblock %}
 
@@ -26,6 +26,6 @@ User|Dashboard
 {% block custom_js %}
 
 <script>
-    alert("Welcome To Information Trackker");
+    alert("Welcome To Information Tracker");
 </script>
 {% endblock %}
