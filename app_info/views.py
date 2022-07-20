@@ -33,6 +33,7 @@ def user_edit(request,id):
         data.email = request.POST.get('email')
         data.contact = request.POST.get('contact')
         data.save()
+        context.setdefault('msg_success', "Updated Successfully")
         return render(request, 'users/profile.html',context)
     return render(request, "users/edit.html", context)
 
