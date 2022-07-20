@@ -14,6 +14,20 @@ def user_dashboard(request):
     }
     return render(request, "users/dashboard.html", context)
 
+def user_profile(request,id):
+    data = StudentDetail.objects.get(id=id)
+    context = {
+        'db_data':data
+    }
+    return render(request, 'users/profile.html',context)
+
+def user_edit(request):
+    data = StudentDetail.objects.get(id=id)
+    context = {
+        'db_data' : data
+    }
+    return render(request, "users/edit.html")
+
 def user_login(request):
     login_form = StudentLoginForm()
     context = {
