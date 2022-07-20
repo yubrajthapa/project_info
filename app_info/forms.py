@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import PasswordInput
 from . models import StudentDetail, AcademicDetail, TrainingDetail
 
 class StudentDetailForm(forms.ModelForm):
