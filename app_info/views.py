@@ -1,5 +1,5 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # importing forms classes
 from . forms import StudentDetailForm, StudentLoginForm
@@ -21,12 +21,20 @@ def user_profile(request,id):
     }
     return render(request, 'users/profile.html',context)
 
-def user_edit(request):
+def user_edit(request,id):
     data = StudentDetail.objects.get(id=id)
     context = {
         'db_data' : data
     }
-    return render(request, "users/edit.html")
+    if request.method == "POST":
+        data.first_name = request.POST.get('first_name')
+        data.middle_name = request.POST.get('middle_name')
+        data.last_name = request.POST.get('last_name')
+        data.email = request.POST.get('email')
+        data.contact = request.POST.get('contact')
+        data.save()
+        return render(request, 'users/profile.html',context)
+    return render(request, "users/edit.html", context)
 
 def user_login(request):
     login_form = StudentLoginForm()
