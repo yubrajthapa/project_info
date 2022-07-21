@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+import random
+import string
 
 # importing forms classes
 from . forms import StudentDetailForm, StudentLoginForm
@@ -6,6 +9,12 @@ from . forms import StudentDetailForm, StudentLoginForm
 from . models import StudentDetail
 
 # Create your views here.
+
+# Sending OPT on email
+def generate_random_string(str_size, allowed_chars):
+    return ''.join(random.choice(allowed_chars) for x in range(str_size))
+
+
 def user_dashboard(request):
     studentdetail = StudentDetailForm
     context={
@@ -32,6 +41,7 @@ def user_edit(request,id):
         data.email = request.POST.get('email')
         data.contact = request.POST.get('contact')
         data.save()
+        #Sending message on successful update
         context.setdefault('msg_success', "Updated Successfully")
         return render(request, 'users/profile.html',context)
     return render(request, "users/edit.html", context)
@@ -64,6 +74,12 @@ def user_register(request):
     context = {
         'form' : reg_form
     }
+
+    # Sending OTP on email
+    chars = string.ascii_letters + string.punctuation
+    size = 6
+    verification_code = generate_random_string(size, chars)
+
     if request.method == "POST":
         #saving data using models
         std_detail = StudentDetail()
@@ -73,6 +89,17 @@ def user_register(request):
         std_detail.contact = request.POST.get("contact")
         std_detail.email = request.POST.get("email")
         std_detail.password = request.POST.get("password")
+        # Saving generated OPT on database
+        std_detail.verification_code = verification_code
         std_detail.save()
 
+        send_mail(
+            'INFO | Verification Code',
+            'Your Verification code ' + verification_code,
+            'yubrajthapa742@gmail.com',
+            [std_detail.email]
+        )
+        return render(request, "users/register.html", context)
+
     return render(request, "users/register.html", context)
+
