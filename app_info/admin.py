@@ -15,3 +15,9 @@ class StudentDetailssAdmin(admin.ModelAdmin):
 admin.site.register(StudentDetail, StudentDetailssAdmin)
 admin.site.register(AcademicDetail)
 admin.site.register(TrainingDetail)
+
+# Changing admin page name links title
+admin.site.app_index = "Info App"
+admin.site.site_header = "Info_App"
+admin.site.site_title = "Admin"
+admin.site.index_title = "Info App"
